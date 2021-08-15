@@ -1,0 +1,35 @@
+trigger: none
+pr: none
+parameters:
+- name: EnvironmentGroupName
+  displayName: EnvironmentGroupName
+  type: object
+  default: none
+- name: EnvironmentTAGName
+  displayName: EnvironmentTAGName
+  type: object
+  default: none
+stages:
+  - stage: stage_1
+    jobs:
+    - deployment:
+      environment: 
+        name: ${{parameters.EnvironmentGroupName}}
+        resourceType: 'VirtualMachine'
+        tags: ${{parameters.EnvironmentTAGName}}
+      strategy:
+       runOnce:
+         deploy:
+           steps:
+            - task: Powershell@2
+              displayName: task-1
+              inputs:
+                targetType: 'inline'
+                script: |
+                    # Write your PowerShell commands here.
+   
+                     Write-Host "Hello World"
+                     New-Item -Path "F:\sahana-YAML" -Itemtype directory
+ 
+ 
+ # condition: eq(variables['Isadir'], '$true')
